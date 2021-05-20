@@ -1,0 +1,47 @@
+{coord: {…}, weather: Array(1), base: "stations", main: {…}, visibility: 1800, …}
+base: "stations"
+clouds:
+all: 14
+__proto__: Object
+cod: 200
+coord:
+lat: 28.6667
+lon: 77.2167
+__proto__: Object
+dt: 1621533708
+id: 1273294
+main:
+feels_like: 26.05
+grnd_level: 979
+humidity: 58
+pressure: 1004
+sea_level: 1004
+temp: 26.05
+temp_max: 26.05
+temp_min: 26.05
+__proto__: Object
+name: "Delhi"
+sys:
+country: "IN"
+id: 9165
+sunrise: 1621468669
+sunset: 1621517866
+type: 1
+__proto__: Object
+timezone: 19800
+visibility: 1800
+weather: Array(1)
+0:
+description: "few clouds"
+icon: "02n"
+id: 801
+main: "Clouds"
+__proto__: Object
+length: 1
+__proto__: Array(0)
+wind:
+deg: 123
+gust: 5.02
+speed: 3.48
+__proto__: Object
+__proto__: Object
