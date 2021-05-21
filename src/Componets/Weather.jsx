@@ -2,10 +2,20 @@ import React, { useState } from "react";
 import { fetchWeather } from "../api/fetchWeather";
 import "./Weather.css";
 import moment from "moment";
+import {
+  Container,
+  Row,
+  Col,
+  Badge,
+  Card,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 
 function Weather() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
+  const [wc, setWc] = useState(false); //umount and mount state wc=WeatherCard
 
   const search = async (e) => {
     if (e.key === "Enter") {
@@ -13,61 +23,103 @@ function Weather() {
       console.log(data);
       setWeather(data);
       setQuery("");
+      setWc(!wc); //umount the weatherCard
     }
   };
 
   return (
-    <div className="main-container ">
-      <input
-        type="text"
-        className="search"
-        placeholder="Search.."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyPress={search}
-      />
-      {weather.main && (
-        <div className="city" style={{ width: "18rem" }}>
-          <h2 className="city-name">
-            <span>{weather.name}</span>
-            <sup>{weather.sys.country}</sup>
-          </h2>
-          <div className="city-temp">
-            {Math.round(weather.main.temp)}
-            <sup>&deg;C</sup>
-            <div className="more-temp">
-              <h6>
-                max:
-                {Math.round(weather.main.temp_max)}
-                <sup>&deg;C</sup>
-              </h6>
-              <h6>
-                min:
-                {Math.round(weather.main.temp_min)}
-                <sup>&deg;C</sup>
-              </h6>
-            </div>
-            <p>
-              Sunrise:{" "}
-              {new Date(weather.sys.sunrise * 1000).toLocaleTimeString("en-IN")}
-            </p>
-            <p>
-              Sunset:{" "}
-              {new Date(weather.sys.sunset * 1000).toLocaleTimeString("en-IN")}
-            </p>
-            <p>Day: {moment().format("dddd")}</p>
-            <p>Date: {moment().format("LL")}</p>
-          </div>
-          <div className="info">
-            <img
-              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt={weather.weather[0].description}
-              className="city-icon"
+    <div className="Weather">
+      <Card className="main-container">
+        <Row>
+          <InputGroup size="sm">
+            <Form.Control
+              type="text"
+              className="search"
+              placeholder="Search.."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={search}
             />
-            <p>{weather.weather[0].description}</p>
-          </div>
-        </div>
-      )}
+          </InputGroup>
+        </Row>
+        {/* mount umount the card */}
+        {wc && (
+          <Card
+            className="card"
+            style={{
+              width: "40rem",
+            }}
+          >
+            <Card.Body className="card-body">
+              {weather.main && (
+                <div className="city">
+                  <h2 className="city-name">
+                    <span>{weather.name}</span>
+                    <Badge className="country" variant="warning">
+                      {weather.sys.country}
+                    </Badge>
+                  </h2>
+                  <div className="city-temp" style={{ fontSize: "10rem" }}>
+                    <span className="temp">
+                      {Math.round(weather.main.temp)}
+                    </span>
+                    <Badge style={{ color: "red", fontSize: "2rem" }}>
+                      &deg;C
+                    </Badge>
+                    <div className="more-temp">
+                      <h3>
+                        max:
+                        {Math.round(weather.main.temp_max)}
+                        <Badge
+                          style={{ background: "none", color: "blue" }}
+                          variant="secondary"
+                        >
+                          &deg;C
+                        </Badge>
+                      </h3>
+                      <h3>
+                        min:
+                        {Math.round(weather.main.temp_min)}
+                        <Badge
+                          style={{ background: "none", color: "blue" }}
+                          variant="secondary"
+                        >
+                          &deg;C
+                        </Badge>
+                      </h3>
+                    </div>
+                    <div className="sun">
+                      <h4>
+                        Sunrise <br />{" "}
+                        {new Date(
+                          weather.sys.sunrise * 1000
+                        ).toLocaleTimeString("en-IN")}
+                      </h4>
+                      <h4>
+                        Sunset <br />{" "}
+                        {new Date(weather.sys.sunset * 1000).toLocaleTimeString(
+                          "en-IN"
+                        )}
+                      </h4>
+                    </div>
+
+                    <h5>{moment().format("dddd")}</h5>
+                    <h5>{moment().format("LL")}</h5>
+                  </div>
+                  <div className="info">
+                    <img
+                      src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                      alt={weather.weather[0].description}
+                      className="city-icon"
+                    />
+                    <h6>{weather.weather[0].description}</h6>
+                  </div>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        )}
+      </Card>
     </div>
   );
 }
