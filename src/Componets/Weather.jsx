@@ -13,12 +13,19 @@ import {
 } from "react-bootstrap";
 
 function Weather() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("california");
   const [weather, setWeather] = useState({});
-  const [wc, setWc] = useState(false); //umount and mount state wc=WeatherCard
-
+  const [wc, setWc] = useState(true); //umount and mount state wc=WeatherCard
+  useEffect(() => {
+    fetchWeather(localStorage.setItem("wetherlocation") || query)
+      .then((result) => {
+        setWeather(result);
+      })
+      .catch(console.log);
+  });
   const search = async (e) => {
     if (e.key === "Enter") {
+      localStorage.setItem("wetherlocation", query);
       const data = await fetchWeather(query);
       console.log(data);
       setWeather(data);
