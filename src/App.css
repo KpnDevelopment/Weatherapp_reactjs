@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  font-size: 1rem;
+  background: #e0e0e0;
+  height: 100vh;
+}
